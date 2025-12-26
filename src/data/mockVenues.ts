@@ -1,0 +1,70 @@
+import type { Venue } from '../types/venue';
+
+export const mockVenues: Venue[] = [
+  {
+    id: '1',
+    name: 'The Halal Guys',
+    coordinates: {
+      lat: 40.7614,
+      lng: -73.9776,
+    },
+    halalStatus: 'fully-halal',
+    venueType: 'restaurant',
+    alcoholPolicy: 'none',
+    cuisine: ['Middle Eastern', 'American'],
+    priceRange: 1,
+    address: '307 W 53rd St, New York, NY 10019',
+    website: 'https://thehalalguys.com',
+    instagram: 'https://instagram.com/thehalalguys',
+    googleMapsUrl: 'https://maps.google.com/?q=The+Halal+Guys+NYC',
+    yelpUrl: 'https://www.yelp.com/biz/the-halal-guys-new-york',
+    photos: [
+      'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800',
+    ],
+    description: 'Famous NYC halal cart serving delicious chicken and gyro platters with signature white and hot sauce. A must-try New York experience.',
+  },
+  {
+    id: '2',
+    name: 'Qahwah House',
+    coordinates: {
+      lat: 40.7282,
+      lng: -73.9942,
+    },
+    halalStatus: 'halal-friendly',
+    venueType: 'cafe',
+    alcoholPolicy: 'none',
+    cuisine: ['Yemeni', 'Coffee', 'Middle Eastern'],
+    priceRange: 2,
+    address: '176 Orchard St, New York, NY 10002',
+    website: 'https://qahwahhouse.com',
+    instagram: 'https://instagram.com/qahwahhouse',
+    googleMapsUrl: 'https://maps.google.com/?q=Qahwah+House+NYC',
+    yelpUrl: 'https://www.yelp.com/biz/qahwah-house-new-york',
+    photos: [
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800',
+    ],
+    description: 'Authentic Yemeni coffee house serving traditional coffee, tea, and pastries. Beautiful ambiance with Middle Eastern decor and no alcohol served.',
+  },
+  {
+    id: '3',
+    name: 'Nur',
+    coordinates: {
+      lat: 40.7252,
+      lng: -73.9874,
+    },
+    halalStatus: 'partially-halal',
+    venueType: 'restaurant',
+    alcoholPolicy: 'non-alcoholic-available',
+    cuisine: ['Middle Eastern', 'Mediterranean', 'Israeli'],
+    priceRange: 3,
+    address: '34 E 20th St, New York, NY 10003',
+    website: 'https://nurnyc.com',
+    instagram: 'https://instagram.com/nurnyc',
+    googleMapsUrl: 'https://maps.google.com/?q=Nur+Restaurant+NYC',
+    yelpUrl: 'https://www.yelp.com/biz/nur-new-york',
+    photos: [
+      'https://images.unsplash.com/photo-1544025162-d76694265947?w=800',
+    ],
+    description: 'Upscale Middle Eastern restaurant with select halal options. Features innovative Israeli cuisine with beautiful plating. Offers creative non-alcoholic beverages alongside their regular menu.',
+  },
+];
