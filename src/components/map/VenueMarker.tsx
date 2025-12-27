@@ -27,7 +27,8 @@ export function VenueMarker({ venue, onClick }: VenueMarkerProps) {
       latitude={venue.coordinates.lat}
       anchor="bottom"
       onClick={(e) => {
-        e.originalEvent.stopPropagation();
+        // Handle both Mapbox events (with originalEvent) and regular events (tests)
+        e.originalEvent?.stopPropagation();
         onClick();
       }}
     >

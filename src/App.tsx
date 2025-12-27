@@ -8,7 +8,6 @@ function App() {
 
   const handleMarkerClick = (venue: Venue) => {
     setSelectedVenue(venue);
-    console.log('Venue clicked:', venue.name);
   };
 
   return (
