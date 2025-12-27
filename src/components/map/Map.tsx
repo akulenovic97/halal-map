@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import ReactMapGL from 'react-map-gl/mapbox';
 import type { ViewState } from 'react-map-gl/mapbox';
-import type { Venue } from '../../types/venue';
-import { VenueMarker } from './VenueMarker';
+import type { Venue } from 'src/types/venue';
+import { VenueMarker } from 'src/components/map/sidebar/VenueMarker';
 
 type MapProps = {
   venues: Venue[];

@@ -1,5 +1,5 @@
 import { Marker } from 'react-map-gl/mapbox';
-import type { Venue } from '../../types/venue';
+import type { Venue } from 'src/types/venue';
 
 type VenueMarkerProps = {
   venue: Venue;
