@@ -28,12 +28,12 @@ export function Map({ venues, onMarkerClick }: MapProps) {
     <div className="h-full w-full">
       <ReactMapGL
         {...viewState}
-        onMove={(evt) => setViewState(evt.viewState)}
+        onMove={evt => setViewState(evt.viewState)}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         mapboxAccessToken={MAPBOX_TOKEN}
         style={{ width: '100%', height: '100%' }}
       >
-        {venues.map((venue) => (
+        {venues.map(venue => (
           <VenueMarker
             key={venue.id}
             venue={venue}

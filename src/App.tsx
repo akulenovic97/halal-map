@@ -1,9 +1,7 @@
-import { MapView } from "src/components/map/MapView";
+import { MapView } from 'src/components/map/MapView';
 
 function App() {
-  return (
-    <MapView />
-  );
+  return <MapView />;
 }
 
 export default App;

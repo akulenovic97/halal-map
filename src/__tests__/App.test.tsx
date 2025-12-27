@@ -17,8 +17,12 @@ describe('App Integration Tests', () => {
     render(<App />);
 
     // All 3 mock venues should have markers
-    expect(screen.getByLabelText(/View details for The Halal Guys/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/View details for Qahwah House/i)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/View details for The Halal Guys/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/View details for Qahwah House/i)
+    ).toBeInTheDocument();
     expect(screen.getByLabelText(/View details for Nur/i)).toBeInTheDocument();
   });
 
@@ -27,7 +31,9 @@ describe('App Integration Tests', () => {
     render(<App />);
 
     // Initially, venue details should not be visible
-    expect(screen.queryByText('307 W 53rd St, New York, NY 10019')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('307 W 53rd St, New York, NY 10019')
+    ).not.toBeInTheDocument();
 
     // Click the marker for The Halal Guys
     const marker = screen.getByLabelText(/View details for The Halal Guys/i);
@@ -35,7 +41,9 @@ describe('App Integration Tests', () => {
 
     // Venue details should appear
     expect(screen.getByText('The Halal Guys')).toBeInTheDocument();
-    expect(screen.getByText('307 W 53rd St, New York, NY 10019')).toBeInTheDocument();
+    expect(
+      screen.getByText('307 W 53rd St, New York, NY 10019')
+    ).toBeInTheDocument();
     expect(screen.getByText('fully-halal')).toBeInTheDocument();
     expect(screen.getByText('restaurant')).toBeInTheDocument();
   });
@@ -45,7 +53,9 @@ describe('App Integration Tests', () => {
     render(<App />);
 
     // Click The Halal Guys (fully-halal)
-    const halalGuysMarker = screen.getByLabelText(/View details for The Halal Guys/i);
+    const halalGuysMarker = screen.getByLabelText(
+      /View details for The Halal Guys/i
+    );
     await user.click(halalGuysMarker);
     expect(screen.getByText('fully-halal')).toBeInTheDocument();
   });
@@ -59,14 +69,18 @@ describe('App Integration Tests', () => {
     await user.click(marker);
 
     // Verify details are visible
-    expect(screen.getByText('307 W 53rd St, New York, NY 10019')).toBeInTheDocument();
+    expect(
+      screen.getByText('307 W 53rd St, New York, NY 10019')
+    ).toBeInTheDocument();
 
     // Click close button
     const closeButton = screen.getByText('Close');
     await user.click(closeButton);
 
     // Details should be gone
-    expect(screen.queryByText('307 W 53rd St, New York, NY 10019')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('307 W 53rd St, New York, NY 10019')
+    ).not.toBeInTheDocument();
   });
 
   it('switches between different venues', async () => {
@@ -74,16 +88,22 @@ describe('App Integration Tests', () => {
     render(<App />);
 
     // Click first venue
-    const halalGuysMarker = screen.getByLabelText(/View details for The Halal Guys/i);
+    const halalGuysMarker = screen.getByLabelText(
+      /View details for The Halal Guys/i
+    );
     await user.click(halalGuysMarker);
     expect(screen.getByText('The Halal Guys')).toBeInTheDocument();
 
     // Click second venue (should replace first)
-    const qahwahMarker = screen.getByLabelText(/View details for Qahwah House/i);
+    const qahwahMarker = screen.getByLabelText(
+      /View details for Qahwah House/i
+    );
     await user.click(qahwahMarker);
 
     expect(screen.getByText('Qahwah House')).toBeInTheDocument();
-    expect(screen.getByText('176 Orchard St, New York, NY 10002')).toBeInTheDocument();
+    expect(
+      screen.getByText('176 Orchard St, New York, NY 10002')
+    ).toBeInTheDocument();
     expect(screen.getByText('halal-friendly')).toBeInTheDocument();
   });
 
@@ -92,7 +112,9 @@ describe('App Integration Tests', () => {
     render(<App />);
 
     // Click Qahwah House (cafe)
-    const qahwahMarker = screen.getByLabelText(/View details for Qahwah House/i);
+    const qahwahMarker = screen.getByLabelText(
+      /View details for Qahwah House/i
+    );
     await user.click(qahwahMarker);
 
     expect(screen.getByText('cafe')).toBeInTheDocument();
@@ -107,7 +129,9 @@ describe('App Integration Tests', () => {
 
     // Check all expected information is displayed
     expect(screen.getByText('Nur')).toBeInTheDocument();
-    expect(screen.getByText('34 E 20th St, New York, NY 10003')).toBeInTheDocument();
+    expect(
+      screen.getByText('34 E 20th St, New York, NY 10003')
+    ).toBeInTheDocument();
     expect(screen.getByText('partially-halal')).toBeInTheDocument();
     expect(screen.getByText('restaurant')).toBeInTheDocument();
   });

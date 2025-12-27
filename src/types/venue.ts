@@ -9,7 +9,7 @@ export type PriceRange = 1 | 2 | 3;
 export type Coordinates = {
   lat: number;
   lng: number;
-}
+};
 
 export type Venue = {
   id: string;
@@ -27,4 +27,4 @@ export type Venue = {
   yelpUrl?: string;
   photos?: string[];
   description: string;
-}
+};

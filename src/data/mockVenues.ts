@@ -21,7 +21,8 @@ export const mockVenues: Venue[] = [
     photos: [
       'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800',
     ],
-    description: 'Famous NYC halal cart serving delicious chicken and gyro platters with signature white and hot sauce. A must-try New York experience.',
+    description:
+      'Famous NYC halal cart serving delicious chicken and gyro platters with signature white and hot sauce. A must-try New York experience.',
   },
   {
     id: '2',
@@ -43,7 +44,8 @@ export const mockVenues: Venue[] = [
     photos: [
       'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800',
     ],
-    description: 'Authentic Yemeni coffee house serving traditional coffee, tea, and pastries. Beautiful ambiance with Middle Eastern decor and no alcohol served.',
+    description:
+      'Authentic Yemeni coffee house serving traditional coffee, tea, and pastries. Beautiful ambiance with Middle Eastern decor and no alcohol served.',
   },
   {
     id: '3',
@@ -62,9 +64,8 @@ export const mockVenues: Venue[] = [
     instagram: 'https://instagram.com/nurnyc',
     googleMapsUrl: 'https://maps.google.com/?q=Nur+Restaurant+NYC',
     yelpUrl: 'https://www.yelp.com/biz/nur-new-york',
-    photos: [
-      'https://images.unsplash.com/photo-1544025162-d76694265947?w=800',
-    ],
-    description: 'Upscale Middle Eastern restaurant with select halal options. Features innovative Israeli cuisine with beautiful plating. Offers creative non-alcoholic beverages alongside their regular menu.',
+    photos: ['https://images.unsplash.com/photo-1544025162-d76694265947?w=800'],
+    description:
+      'Upscale Middle Eastern restaurant with select halal options. Features innovative Israeli cuisine with beautiful plating. Offers creative non-alcoholic beverages alongside their regular menu.',
   },
 ];
