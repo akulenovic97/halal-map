@@ -1,27 +1,27 @@
 import type { HTMLAttributes } from 'react';
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
-    position?: 'fixed' | 'absolute' | 'relative';
-}
+  position?: 'fixed' | 'absolute' | 'relative';
+};
 
 export function Card({
-    position = 'relative',
-    className = '',
-    children,
-    ...props
+  position = 'relative',
+  className = '',
+  children,
+  ...props
 }: CardProps) {
-    const positionClasses = {
-        fixed: 'fixed',
-        absolute: 'absolute bottom-4 left-4',
-        relative: 'relative',
-    };
+  const positionClasses = {
+    fixed: 'fixed',
+    absolute: 'absolute bottom-4 left-4',
+    relative: 'relative',
+  };
 
-    return (
-        <div
-            className={`${positionClasses[position]} bg-white p-4 rounded-lg shadow-xl max-w-sm ${className}`}
-            {...props}
-        >
-            {children}
-        </div>
-    )
+  return (
+    <div
+      className={`${positionClasses[position]} max-w-sm rounded-lg bg-white p-4 shadow-xl ${className}`}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 }

@@ -18,15 +18,21 @@ describe('Map Component', () => {
     );
 
     // Should render 3 markers (one for each mock venue)
-    const markers = container.querySelectorAll('button[aria-label*="View details"]');
+    const markers = container.querySelectorAll(
+      'button[aria-label*="View details"]'
+    );
     expect(markers).toHaveLength(3);
   });
 
   it('renders markers with correct venue names in aria-labels', () => {
     render(<Map venues={mockVenues} onMarkerClick={vi.fn()} />);
 
-    expect(screen.getByLabelText(/View details for The Halal Guys/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/View details for Qahwah House/i)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/View details for The Halal Guys/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/View details for Qahwah House/i)
+    ).toBeInTheDocument();
     expect(screen.getByLabelText(/View details for Nur/i)).toBeInTheDocument();
   });
 
@@ -36,7 +42,9 @@ describe('Map Component', () => {
 
     render(<Map venues={mockVenues} onMarkerClick={mockOnClick} />);
 
-    const halalGuysMarker = screen.getByLabelText(/View details for The Halal Guys/i);
+    const halalGuysMarker = screen.getByLabelText(
+      /View details for The Halal Guys/i
+    );
     await user.click(halalGuysMarker);
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -55,11 +63,15 @@ describe('Map Component', () => {
     render(<Map venues={mockVenues} onMarkerClick={mockOnClick} />);
 
     // Click first marker
-    const halalGuysMarker = screen.getByLabelText(/View details for The Halal Guys/i);
+    const halalGuysMarker = screen.getByLabelText(
+      /View details for The Halal Guys/i
+    );
     await user.click(halalGuysMarker);
 
     // Click second marker
-    const qahwahMarker = screen.getByLabelText(/View details for Qahwah House/i);
+    const qahwahMarker = screen.getByLabelText(
+      /View details for Qahwah House/i
+    );
     await user.click(qahwahMarker);
 
     expect(mockOnClick).toHaveBeenCalledTimes(2);
@@ -70,11 +82,11 @@ describe('Map Component', () => {
   });
 
   it('renders empty map when no venues provided', () => {
-    const { container } = render(
-      <Map venues={[]} onMarkerClick={vi.fn()} />
-    );
+    const { container } = render(<Map venues={[]} onMarkerClick={vi.fn()} />);
 
-    const markers = container.querySelectorAll('button[aria-label*="View details"]');
+    const markers = container.querySelectorAll(
+      'button[aria-label*="View details"]'
+    );
     expect(markers).toHaveLength(0);
   });
 

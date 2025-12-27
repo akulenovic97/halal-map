@@ -26,23 +26,17 @@ export function VenueMarker({ venue, onClick }: VenueMarkerProps) {
       longitude={venue.coordinates.lng}
       latitude={venue.coordinates.lat}
       anchor="bottom"
-      onClick={(e) => {
+      onClick={e => {
         // Handle both Mapbox events (with originalEvent) and regular events (tests)
         e.originalEvent?.stopPropagation();
         onClick();
       }}
     >
       <button
-        className={`
-          ${getMarkerColor()}
-          w-8 h-8 rounded-full border-2 border-white shadow-lg
-          cursor-pointer transition-all duration-200
-          hover:scale-110 hover:shadow-xl
-          flex items-center justify-center
-        `}
+        className={` ${getMarkerColor()} flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-white shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl`}
         aria-label={`View details for ${venue.name}`}
       >
-        <span className="text-white text-xs font-bold">
+        <span className="text-xs font-bold text-white">
           {venue.venueType === 'cafe' ? '☕' : '🍽️'}
         </span>
       </button>

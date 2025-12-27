@@ -6,4 +6,4 @@ export type VenueFilters = {
   alcoholPolicy?: AlcoholPolicy[];
   cuisine?: string[];
   priceRange?: number[];
-}
+};

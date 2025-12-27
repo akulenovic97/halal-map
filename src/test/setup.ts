@@ -10,16 +10,26 @@ afterEach(() => {
 
 // Mock react-map-gl to render children without actual map
 vi.mock('react-map-gl/mapbox', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: ({ children, ...props }: any) =>
-    React.createElement('div', { 'data-testid': 'mock-map', ...props }, children),
+    React.createElement(
+      'div',
+      { 'data-testid': 'mock-map', ...props },
+      children
+    ),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Marker: ({ children, onClick, ...props }: any) =>
-    React.createElement('div', { 'data-testid': 'mock-marker', onClick, ...props }, children),
+    React.createElement(
+      'div',
+      { 'data-testid': 'mock-marker', onClick, ...props },
+      children
+    ),
 }));
 
 // Mock window.matchMedia (used by some libraries)
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
