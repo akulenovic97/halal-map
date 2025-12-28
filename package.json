@@ -19,6 +19,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.12",
     "mapbox-gl": "^3.17.0",
+    "nuqs": "^2.8.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-map-gl": "^8.1.0"

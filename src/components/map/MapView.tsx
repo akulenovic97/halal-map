@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Venue } from 'src/types/venue';
 import { MapHeader } from 'src/components/map/MapHeader';
 import { Map } from 'src/components/map/Map';
 import { VenueCard } from 'src/components/map/sidebar/VenueCard';
 import { mockVenues } from 'src/data/mockVenues';
+import { useFilters } from 'src/hooks/useFilters';
+import { filterVenues } from 'src/utils/filterVenues';
 
 export function MapView() {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
+  const { filters } = useFilters();
+
+  // Filter venues based on active filters
+  const filteredVenues = useMemo(
+    () => filterVenues(mockVenues, filters),
+    [filters]
+  );
 
   const handleMarkerClick = (venue: Venue) => {
     setSelectedVenue(venue);
@@ -18,7 +27,7 @@ export function MapView() {
 
       {/* Main Content */}
       <div className="relative flex-1">
-        <Map venues={mockVenues} onMarkerClick={handleMarkerClick} />
+        <Map venues={filteredVenues} onMarkerClick={handleMarkerClick} />
 
         {/* Temporary selected venue display */}
         {selectedVenue && (

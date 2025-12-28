@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -26,6 +26,8 @@ export function Button({
     ghost:
       'text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
     danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    outline:
+      'border border-halal-green-600 bg-white text-halal-green-900 hover:bg-halal-green-50 focus:ring-halal-green-600',
   };
 
   const sizes = {
