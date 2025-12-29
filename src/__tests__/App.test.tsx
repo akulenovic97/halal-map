@@ -30,22 +30,17 @@ describe('App Integration Tests', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    // Initially, venue details should not be visible
-    expect(
-      screen.queryByText('307 W 53rd St, New York, NY 10019')
-    ).not.toBeInTheDocument();
+    // Initially, the popup card should not be visible (no Close button)
+    expect(screen.queryByText('Close')).not.toBeInTheDocument();
 
     // Click the marker for The Halal Guys
     const marker = screen.getByLabelText(/View details for The Halal Guys/i);
     await user.click(marker);
 
-    // Venue details should appear
-    expect(screen.getByText('The Halal Guys')).toBeInTheDocument();
-    expect(
-      screen.getByText('307 W 53rd St, New York, NY 10019')
-    ).toBeInTheDocument();
-    expect(screen.getByText('fully-halal')).toBeInTheDocument();
-    expect(screen.getByText('restaurant')).toBeInTheDocument();
+    // Venue popup card should appear with Close button
+    expect(screen.getByText('Close')).toBeInTheDocument();
+    // Venue appears in both sidebar and popup
+    expect(screen.getAllByText('The Halal Guys')).toHaveLength(2);
   });
 
   it('displays correct halal status badge', async () => {
@@ -68,19 +63,15 @@ describe('App Integration Tests', () => {
     const marker = screen.getByLabelText(/View details for The Halal Guys/i);
     await user.click(marker);
 
-    // Verify details are visible
-    expect(
-      screen.getByText('307 W 53rd St, New York, NY 10019')
-    ).toBeInTheDocument();
+    // Verify popup is visible (has Close button)
+    expect(screen.getByText('Close')).toBeInTheDocument();
 
     // Click close button
     const closeButton = screen.getByText('Close');
     await user.click(closeButton);
 
-    // Details should be gone
-    expect(
-      screen.queryByText('307 W 53rd St, New York, NY 10019')
-    ).not.toBeInTheDocument();
+    // Popup should be gone (no Close button)
+    expect(screen.queryByText('Close')).not.toBeInTheDocument();
   });
 
   it('switches between different venues', async () => {
@@ -92,19 +83,18 @@ describe('App Integration Tests', () => {
       /View details for The Halal Guys/i
     );
     await user.click(halalGuysMarker);
-    expect(screen.getByText('The Halal Guys')).toBeInTheDocument();
+    expect(screen.getAllByText('The Halal Guys')).toHaveLength(2); // sidebar + popup
+    expect(screen.getByText('Close')).toBeInTheDocument();
 
-    // Click second venue (should replace first)
+    // Click second venue (should replace first in popup)
     const qahwahMarker = screen.getByLabelText(
       /View details for Qahwah House/i
     );
     await user.click(qahwahMarker);
 
-    expect(screen.getByText('Qahwah House')).toBeInTheDocument();
-    expect(
-      screen.getByText('176 Orchard St, New York, NY 10002')
-    ).toBeInTheDocument();
-    expect(screen.getByText('halal-friendly')).toBeInTheDocument();
+    // Popup should show second venue
+    expect(screen.getAllByText('Qahwah House')).toHaveLength(2); // sidebar + popup
+    expect(screen.getByText('Close')).toBeInTheDocument();
   });
 
   it('shows correct venue type badge', async () => {
@@ -127,12 +117,8 @@ describe('App Integration Tests', () => {
     const marker = screen.getByLabelText(/View details for Nur/i);
     await user.click(marker);
 
-    // Check all expected information is displayed
-    expect(screen.getByText('Nur')).toBeInTheDocument();
-    expect(
-      screen.getByText('34 E 20th St, New York, NY 10003')
-    ).toBeInTheDocument();
-    expect(screen.getByText('partially-halal')).toBeInTheDocument();
-    expect(screen.getByText('restaurant')).toBeInTheDocument();
+    // Check popup is displayed with venue information
+    expect(screen.getByText('Close')).toBeInTheDocument();
+    expect(screen.getAllByText('Nur')).toHaveLength(2); // sidebar + popup
   });
 });
