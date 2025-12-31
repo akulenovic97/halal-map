@@ -9,7 +9,7 @@ afterEach(() => {
 });
 
 // Mock react-map-gl to render children without actual map
-vi.mock('react-map-gl/mapbox', () => ({
+vi.mock('react-map-gl/maplibre', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: ({ children, ...props }: any) =>
     React.createElement(

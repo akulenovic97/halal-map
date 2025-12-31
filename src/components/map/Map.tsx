@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import ReactMapGL from 'react-map-gl/mapbox';
-import type { ViewState } from 'react-map-gl/mapbox';
+import ReactMapGL from 'react-map-gl/maplibre';
+import type { ViewState } from 'react-map-gl/maplibre';
 import type { Venue } from 'src/types/venue';
 import type { MapBounds } from 'src/types/map';
 import { VenueMarker } from 'src/components/map/sidebar/VenueMarker';
@@ -10,8 +10,6 @@ type MapProps = {
   onMarkerClick?: (venue: Venue) => void;
   onBoundsChange?: (bounds: MapBounds) => void;
 };
-
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 // NYC center coordinates
 const INITIAL_VIEW_STATE: ViewState = {
@@ -70,8 +68,7 @@ export function Map({ venues, onMarkerClick, onBoundsChange }: MapProps) {
       <ReactMapGL
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
-        mapboxAccessToken={MAPBOX_TOKEN}
+        mapStyle="https://tiles.openfreemap.org/styles/liberty"
         style={{ width: '100%', height: '100%' }}
       >
         {venues.map(venue => (

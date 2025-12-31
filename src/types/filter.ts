@@ -1,4 +1,4 @@
-import type { HalalStatus, VenueType, AlcoholPolicy } from './venue';
+import type { HalalStatus, VenueType, AlcoholPolicy } from 'src/types/venue';
 
 export type VenueFilters = {
   halalStatus?: HalalStatus[];

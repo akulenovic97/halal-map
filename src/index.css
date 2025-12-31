@@ -1,4 +1,4 @@
 @import 'tailwindcss';
 
-/* Mapbox GL CSS - required for map to render properly */
-@import 'mapbox-gl/dist/mapbox-gl.css';
+/* MapLibre GL CSS - required for map to render properly */
+@import 'maplibre-gl/dist/maplibre-gl.css';

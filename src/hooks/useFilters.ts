@@ -1,13 +1,10 @@
 import { useQueryState, parseAsArrayOf, parseAsStringEnum } from 'nuqs';
 import { useMemo, useCallback } from 'react';
-import type { VenueFilters, VenueType } from '../types/filter';
+import type { VenueFilters } from 'src/types/filter';
+import type { VenueType } from 'src/types/venue';
 
 const VENUE_TYPES = ['restaurant', 'cafe', 'bakery'] as const;
-const DEFAULT_VENUE_TYPES: VenueType[] = [
-  'restaurant',
-  'cafe',
-  'bakery',
-] as const;
+const DEFAULT_VENUE_TYPES: VenueType[] = ['restaurant', 'cafe', 'bakery'];
 
 export interface UseFiltersReturn {
   filters: VenueFilters;
@@ -43,7 +40,7 @@ export interface UseFiltersReturn {
 export function useFilters(): UseFiltersReturn {
   const [venueTypes, setVenueTypesState] = useQueryState(
     'venueType',
-    parseAsArrayOf(parseAsStringEnum(VENUE_TYPES)).withDefault(
+    parseAsArrayOf(parseAsStringEnum([...VENUE_TYPES])).withDefault(
       DEFAULT_VENUE_TYPES
     )
   );
