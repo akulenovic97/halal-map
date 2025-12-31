@@ -28,7 +28,6 @@ export default defineConfig({
     },
   },
   define: {
-    'import.meta.env.VITE_MAPBOX_TOKEN': JSON.stringify('test-token'),
     'import.meta.env.VITE_USE_MOCK_DATA': JSON.stringify('true'),
   },
 });
