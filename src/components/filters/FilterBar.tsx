@@ -1,9 +1,10 @@
 import { useFilters } from 'src/hooks/useFilters';
-import { VenueTypeFilter } from 'src/components/filters/VenueTypeFilter';
+import { GenericFilter } from 'src/components/filters/GenericFilter';
+import { FILTER_CONFIGS } from 'src/config/filterConfig';
 import { useState } from 'react';
 
 export function FilterBar() {
-  const { filters, toggleVenueType, setVenueTypes } = useFilters();
+  const { filters, toggleFilter, setFilter } = useFilters();
   const [openFilter, setOpenFilter] = useState<string | null>(null);
 
   return (
@@ -12,19 +13,22 @@ export function FilterBar() {
         <span className="text-halal-green-900 text-sm font-medium">
           Filters:
         </span>
-        <VenueTypeFilter
+        <GenericFilter
+          config={FILTER_CONFIGS.venueType}
           filters={filters}
-          onToggleVenueType={toggleVenueType}
-          onSetVenueTypes={setVenueTypes}
-          isOpen={openFilter === 'venue-type'}
-          onOpenChange={open => setOpenFilter(open ? 'venue-type' : null)}
+          onToggle={value => toggleFilter('venueType', value)}
+          onSetValues={values => setFilter('venueType', values)}
+          isOpen={openFilter === 'venueType'}
+          onOpenChange={open => setOpenFilter(open ? 'venueType' : null)}
         />
-        {/* Future filters will be added here:
-            - HalalStatusFilter
-            - AlcoholPolicyFilter
-            - CuisineFilter
-            - PriceRangeFilter
-        */}
+        <GenericFilter
+          config={FILTER_CONFIGS.halalStatus}
+          filters={filters}
+          onToggle={value => toggleFilter('halalStatus', value)}
+          onSetValues={values => setFilter('halalStatus', values)}
+          isOpen={openFilter === 'halalStatus'}
+          onOpenChange={open => setOpenFilter(open ? 'halalStatus' : null)}
+        />
       </div>
     </div>
   );
