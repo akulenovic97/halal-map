@@ -1,46 +1,38 @@
-import type { VenueType } from 'src/types/venue';
 import type { VenueFilters } from 'src/types/filter';
+import type { FilterConfig } from 'src/config/filterConfig';
 import { Button } from 'src/components/common/Button';
 import { Badge } from 'src/components/common/Badge';
 import { DropdownMenu } from 'src/components/common/dropdown/DropdownMenu';
 import { FilterQuickActions } from 'src/components/common/dropdown/FilterQuickActions';
 import { CheckboxOption } from 'src/components/common/dropdown/CheckboxOption';
 
-const VENUE_TYPE_OPTIONS: Array<{
-  type: VenueType;
-  label: string;
-  icon: string;
-}> = [
-  { type: 'restaurant', label: 'Restaurant', icon: '🍽️' },
-  { type: 'cafe', label: 'Cafe', icon: '☕' },
-  { type: 'bakery', label: 'Bakery', icon: '🥐' },
-];
-
-type VenueTypeFilterProps = {
+type GenericFilterProps<T> = {
+  config: FilterConfig<T>;
   filters: VenueFilters;
-  onToggleVenueType: (type: VenueType) => void;
-  onSetVenueTypes: (types: VenueType[]) => void;
+  onToggle: (value: T) => void;
+  onSetValues: (values: T[]) => void;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-export function VenueTypeFilter({
+export function GenericFilter<T extends string>({
+  config,
   filters,
-  onToggleVenueType,
-  onSetVenueTypes,
+  onToggle,
+  onSetValues,
   isOpen,
   onOpenChange,
-}: VenueTypeFilterProps) {
-  const selectedTypes = filters.venueType || [];
-  const selectedCount = selectedTypes.length;
-  const allSelected = selectedCount === VENUE_TYPE_OPTIONS.length;
+}: GenericFilterProps<T>) {
+  const selectedValues = (filters[config.key] || []) as T[];
+  const selectedCount = selectedValues.length;
+  const allSelected = selectedCount === config.options.length;
 
   const handleSelectAll = () => {
-    onSetVenueTypes(VENUE_TYPE_OPTIONS.map(option => option.type));
+    onSetValues(config.options.map(option => option.value));
   };
 
   const handleClearAll = () => {
-    onSetVenueTypes([]);
+    onSetValues([]);
   };
 
   return (
@@ -51,7 +43,7 @@ export function VenueTypeFilter({
         onClick={() => onOpenChange(!isOpen)}
         className="flex items-center gap-2"
       >
-        Venue Type
+        {config.label}
         {selectedCount > 0 && (
           <Badge variant="halal">{allSelected ? 'All' : selectedCount}</Badge>
         )}
@@ -64,11 +56,11 @@ export function VenueTypeFilter({
           noneSelected={selectedCount === 0}
         />
         <div className="space-y-1">
-          {VENUE_TYPE_OPTIONS.map(option => (
+          {config.options.map(option => (
             <CheckboxOption
-              key={option.type}
-              checked={selectedTypes.includes(option.type)}
-              onChange={() => onToggleVenueType(option.type)}
+              key={option.value}
+              checked={selectedValues.includes(option.value)}
+              onChange={() => onToggle(option.value)}
               icon={option.icon}
               label={option.label}
             />

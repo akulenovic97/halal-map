@@ -1,89 +1,105 @@
-import { useQueryState, parseAsArrayOf, parseAsStringEnum } from 'nuqs';
-import { useMemo, useCallback } from 'react';
+import { useQueryState } from 'nuqs';
+import { useCallback } from 'react';
 import type { VenueFilters } from 'src/types/filter';
-import type { VenueType } from 'src/types/venue';
+import type { VenueType, HalalStatus, AlcoholPolicy } from 'src/types/venue';
+import { FILTER_CONFIGS, type FilterKey } from 'src/config/filterConfig';
 
-const VENUE_TYPES = ['restaurant', 'cafe', 'bakery'] as const;
-const DEFAULT_VENUE_TYPES: VenueType[] = ['restaurant', 'cafe', 'bakery'];
+// Type helper to map filter keys to their value types
+type FilterValue<K extends FilterKey> = K extends 'venueType'
+  ? VenueType
+  : K extends 'halalStatus'
+    ? HalalStatus
+    : K extends 'alcoholPolicy'
+      ? AlcoholPolicy
+      : K extends 'cuisine'
+        ? string
+        : K extends 'priceRange'
+          ? number
+          : never;
 
-export interface UseFiltersReturn {
-  filters: VenueFilters;
-  toggleVenueType: (type: VenueType) => void;
-  setVenueTypes: (types: VenueType[]) => void;
-  clearFilters: () => void;
+// Build default filters dynamically from config
+function getDefaultFilters(): VenueFilters {
+  const defaults: Partial<VenueFilters> = {};
+
+  (Object.keys(FILTER_CONFIGS) as (keyof typeof FILTER_CONFIGS)[]).forEach(
+    key => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      defaults[key] = FILTER_CONFIGS[key].defaultValue as any;
+    }
+  );
+
+  return defaults as VenueFilters;
 }
 
-/**
- * Custom hook for managing venue filter state via URL query parameters.
- *
- * This hook uses URL search params to store filter state, enabling:
- * - Shareable filtered views via URL
- * - Browser back/forward navigation
- * - State persistence across page reloads
- *
- * @returns Object containing filter state and update functions
- *
- * @example
- * ```tsx
- * const { filters, toggleVenueType } = useFilters();
- *
- * // Toggle a venue type (updates URL: ?venueType=restaurant,cafe)
- * toggleVenueType('cafe');
- *
- * // Set multiple venue types
- * setVenueTypes(['restaurant', 'bakery']);
- *
- * // Reset filters (clears URL params)
- * clearFilters();
- * ```
- */
+// Custom JSON parser for URL query param
+const filtersParser = {
+  parse: (value: string | null): VenueFilters => {
+    if (!value) return getDefaultFilters();
+    try {
+      return JSON.parse(value) as VenueFilters;
+    } catch {
+      return getDefaultFilters();
+    }
+  },
+  serialize: (value: VenueFilters): string => {
+    return JSON.stringify(value);
+  },
+};
+
+export type UseFiltersReturn = {
+  filters: VenueFilters;
+  toggleFilter: <K extends FilterKey>(
+    filterKey: K,
+    value: FilterValue<K>
+  ) => void;
+  setFilter: <K extends FilterKey>(
+    filterKey: K,
+    values: FilterValue<K>[]
+  ) => void;
+};
+
 export function useFilters(): UseFiltersReturn {
-  const [venueTypes, setVenueTypesState] = useQueryState(
-    'venueType',
-    parseAsArrayOf(parseAsStringEnum([...VENUE_TYPES])).withDefault(
-      DEFAULT_VENUE_TYPES
-    )
+  const [filters, setFilters] = useQueryState(
+    'filters',
+    {
+      ...filtersParser,
+      defaultValue: getDefaultFilters(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any // nuqs types might need this
   );
 
-  const toggleVenueType = useCallback(
-    (type: VenueType) => {
-      const currentTypes = venueTypes || [];
-      const isSelected = currentTypes.includes(type);
+  const toggleFilter = useCallback(
+    <K extends FilterKey>(filterKey: K, value: FilterValue<K>) => {
+      setFilters(prev => {
+        const currentFilters = (prev || getDefaultFilters()) as VenueFilters;
+        const current = (currentFilters[filterKey as keyof VenueFilters] ||
+          []) as FilterValue<K>[];
+        const newValues = current.includes(value)
+          ? current.filter(v => v !== value)
+          : [...current, value];
 
-      if (isSelected) {
-        setVenueTypesState(currentTypes.filter(t => t !== type));
-      } else {
-        setVenueTypesState([...currentTypes, type]);
-      }
+        return {
+          ...currentFilters,
+          [filterKey]: newValues,
+        };
+      });
     },
-    [venueTypes, setVenueTypesState]
+    [setFilters]
   );
 
-  const setVenueTypes = useCallback(
-    (types: VenueType[]) => {
-      setVenueTypesState(types);
+  const setFilter = useCallback(
+    <K extends FilterKey>(filterKey: K, values: FilterValue<K>[]) => {
+      setFilters(prev => ({
+        ...(prev || getDefaultFilters()),
+        [filterKey]: values,
+      }));
     },
-    [setVenueTypesState]
+    [setFilters]
   );
 
-  const clearFilters = useCallback(() => {
-    setVenueTypesState(DEFAULT_VENUE_TYPES);
-  }, [setVenueTypesState]);
-
-  const filters: VenueFilters = useMemo(
-    () => ({
-      venueType: venueTypes,
-    }),
-    [venueTypes]
-  );
-
-  return useMemo(
-    () => ({
-      filters,
-      toggleVenueType,
-      setVenueTypes,
-      clearFilters,
-    }),
-    [filters, toggleVenueType, setVenueTypes, clearFilters]
-  );
+  return {
+    filters: filters || getDefaultFilters(),
+    toggleFilter,
+    setFilter,
+  };
 }
