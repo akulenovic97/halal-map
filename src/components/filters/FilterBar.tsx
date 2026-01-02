@@ -29,6 +29,14 @@ export function FilterBar() {
           isOpen={openFilter === 'halalStatus'}
           onOpenChange={open => setOpenFilter(open ? 'halalStatus' : null)}
         />
+        <GenericFilter
+          config={FILTER_CONFIGS.alcoholPolicy}
+          filters={filters}
+          onToggle={value => toggleFilter('alcoholPolicy', value)}
+          onSetValues={values => setFilter('alcoholPolicy', values)}
+          isOpen={openFilter === 'alcoholPolicy'}
+          onOpenChange={open => setOpenFilter(open ? 'alcoholPolicy' : null)}
+        />
       </div>
     </div>
   );

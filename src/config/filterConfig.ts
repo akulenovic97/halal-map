@@ -1,5 +1,5 @@
 import type { VenueFilters } from 'src/types/filter';
-import type { VenueType, HalalStatus } from 'src/types/venue';
+import type { VenueType, HalalStatus, AlcoholPolicy } from 'src/types/venue';
 
 export type FilterKey = keyof VenueFilters;
 
@@ -38,9 +38,24 @@ const HALAL_STATUS_CONFIG: FilterConfig<HalalStatus> = {
   defaultValue: ['fully-halal', 'partially-halal', 'halal-friendly'],
 };
 
+const ALCOHOL_POLICY_CONFIG: FilterConfig<AlcoholPolicy> = {
+  key: 'alcoholPolicy',
+  label: 'Alcohol Policy',
+  options: [
+    { value: 'none' as const, label: 'No Alcohol', icon: '🚫🍺' },
+    {
+      value: 'non-alcoholic-available' as const,
+      label: 'Non-Alcoholic Available',
+      icon: '🍺',
+    },
+  ],
+  defaultValue: ['none', 'non-alcoholic-available'],
+};
+
 export const FILTER_CONFIGS = {
   venueType: VENUE_TYPE_CONFIG,
   halalStatus: HALAL_STATUS_CONFIG,
+  alcoholPolicy: ALCOHOL_POLICY_CONFIG,
 };
 
 export function getFilterConfig<K extends keyof typeof FILTER_CONFIGS>(
