@@ -14,7 +14,12 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:migration:new": "npx supabase@latest migration new",
+    "db:push": "npx supabase@latest db push",
+    "db:reset": "npx supabase@latest db reset",
+    "db:types": "npx supabase@latest gen types typescript --project-id",
+    "db:link": "npx supabase@latest link --project-ref"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.89.0",
